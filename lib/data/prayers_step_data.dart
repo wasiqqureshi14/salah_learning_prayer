@@ -57,7 +57,7 @@ List<PrayerStep> buildSteps({
       title: 'Surah Al-Fatiha',
       image: 'assets/steps/ruku.png',
       arabic: 'الْحَمْدُ لِلّٰهِ رَبِّ الْعَالَمِينَ الرَّحْمَٰنِ الرَّحِيمِ مَالِكِ يَوْمِ الدِّينِ  إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ  صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ',
-      translation: 'All praise is for Allah, the Lord of all worlds. /nThe Most Merciful, the Most Compassionate.  Master of the Day of Judgment.  You alone we worship, and You alone we ask for help.Guide us to the straight path. The path of those You have blessed, not of those who earned Youranger nor of those who went astray.',
+      translation: 'All praise is for Allah, the Lord of all worlds. The Most Merciful, the Most Compassionate.  Master of the Day of Judgment.  You alone we worship, and You alone we ask for help.Guide us to the straight path. The path of those You have blessed, not of those who earned Youranger nor of those who went astray.',
     ),
     const PrayerStep(
       order: 7,

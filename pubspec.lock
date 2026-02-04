@@ -9,14 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "91.0.0"
-  adhan_dart:
+  adhan:
     dependency: "direct main"
     description:
-      name: adhan_dart
-      sha256: "4910af871e17b412a744616647dd9ecf4a7d0096dcbeb3a2432ac2994b1b5fb4"
+      name: adhan
+      sha256: e1d3363c8127dc614947ecf312e458fbf4783af3db8e3b465c4a286eb37374ac
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.0"
+    version: "2.0.0+1"
   analyzer:
     dependency: transitive
     description:
@@ -158,6 +158,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_compass:
+    dependency: "direct main"
+    description:
+      name: flutter_compass
+      sha256: "1b4d7e6c95a675ec8482b5c9c9ccf1ebf0ced3dbec59dce28ad609da953de850"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.1"
   flutter_lints:
     dependency: "direct dev"
     description:

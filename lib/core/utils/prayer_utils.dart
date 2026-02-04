@@ -1,4 +1,5 @@
-import 'package:adhan_dart/adhan_dart.dart';
+import 'package:adhan/adhan.dart';
+
 
 String getCurrentPrayer(PrayerTimes times, DateTime now) {
   if (now.isBefore(times.fajr)) return 'Isha';

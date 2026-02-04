@@ -28,9 +28,26 @@ class PrayerCard extends StatelessWidget {
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
-            color: isActive
-                ? Colors.white.withOpacity(0.25)
-                : Colors.white.withOpacity(0.15),
+           color: isActive
+    ? Colors.white.withOpacity(0.35)
+    : Colors.white.withOpacity(0.15),
+
+border: isActive
+    ? Border.all(
+        color: Colors.white,
+        width: 2,
+      )
+    : null,
+
+boxShadow: isActive
+    ? [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.25),
+          blurRadius: 12,
+          offset: const Offset(0, 4),
+        ),
+      ]
+    : [],
             borderRadius: BorderRadius.circular(40),
           ),
           child: Column(

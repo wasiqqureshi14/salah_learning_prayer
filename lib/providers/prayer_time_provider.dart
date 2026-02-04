@@ -1,8 +1,9 @@
-import 'package:adhan_dart/adhan_dart.dart';
+import 'package:adhan/adhan.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'location_provider.dart';
 
 final prayerTimesProvider = FutureProvider<PrayerTimes>((ref) async {
+
   final position = await ref.watch(locationProvider.future);
 
   final coordinates = Coordinates(
@@ -10,18 +11,15 @@ final prayerTimesProvider = FutureProvider<PrayerTimes>((ref) async {
     position.longitude,
   );
 
-  // 🌍 GLOBAL method (this is the ONLY correct API)
-  final params = CalculationMethod.muslimWorldLeague.parameters;
+  final params = CalculationMethod.muslim_world_league.getParameters();
 
-  final now = DateTime.now();
+  params.madhab = Madhab.hanafi; 
+
+  final date = DateComponents.from(DateTime.now());
 
   return PrayerTimes(
-    coordinates: coordinates,
-    date: now,
-    calculationParameters: params,
+    coordinates,
+    date,
+    params,
   );
 });
-
-extension on CalculationMethod {
-   get parameters => null;
-}
