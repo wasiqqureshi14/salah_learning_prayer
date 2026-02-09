@@ -9,8 +9,8 @@ const Map<String, PrayerModel> prayerData = {
     ],
   ),
 
-  'zohr': PrayerModel(
-    name: 'Zohr',
+  'dhuhr': PrayerModel(
+    name: 'dhuhr',
     rakats: [
       '4 Rakats Sunnah',
       '4 Rakats Farz',

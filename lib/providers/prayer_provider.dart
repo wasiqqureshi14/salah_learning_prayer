@@ -5,5 +5,6 @@ import '../models/prayer_model.dart';
 
 final selectedPrayerProvider =
     StateProvider<PrayerModel>((ref) {
-  return prayerData['zohr']!;
+ return prayerData['dhuhr']!;
+
 });

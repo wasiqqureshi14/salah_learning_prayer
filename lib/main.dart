@@ -19,9 +19,13 @@ class SalahApp extends StatelessWidget {
     return MaterialApp(
       title: 'Namaz App',
       debugShowCheckedModeBanner: false,
+
       theme: AppTheme.lightTheme,
+
       darkTheme: AppTheme.darkTheme,
+      
       themeMode: ThemeMode.light,
+
       home: const HomeScreen(),
     );
   }

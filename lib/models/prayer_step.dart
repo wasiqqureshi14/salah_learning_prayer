@@ -4,6 +4,8 @@ class PrayerStep {
   final String image; // 👈 ADD THIS
   final String arabic;
   final String translation;
+  final int repeat;
+
 
   const PrayerStep({
     required this.order,
@@ -11,5 +13,7 @@ class PrayerStep {
     required this.image,
     required this.arabic,
     required this.translation,
+     this.repeat = 1,
   });
+  
 }

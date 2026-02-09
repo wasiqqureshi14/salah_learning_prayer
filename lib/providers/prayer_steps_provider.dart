@@ -11,4 +11,6 @@ final totalRakatsProvider = StateProvider<int>((ref) => 1);
 final currentRakatProvider = StateProvider<int>((ref) => 1);
 final rakatTypeProvider = StateProvider<String>((ref) => '');
 final selectedRakatTextProvider = StateProvider<String>((ref) => '');
+final repeatCountProvider =StateProvider<int>((ref) => 1);
+
 

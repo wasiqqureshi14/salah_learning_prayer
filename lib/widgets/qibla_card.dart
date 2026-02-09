@@ -27,84 +27,119 @@ class QiblaCard extends ConsumerWidget {
         final lng = position.longitude;
 
         final compassSize =
-            size ?? MediaQuery.of(context).size.width * 0.55;
+            size ?? MediaQuery.of(context).size.width * 0.65;
 
-        return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: const Color(0xFF016568),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Column(
-            children: [
+        return Center(
+          child: StreamBuilder<CompassEvent>(
+            stream: FlutterCompass.events,
+            builder: (context, snapshot) {
 
-              /// ⭐ COMPASS STREAM
-              StreamBuilder<CompassEvent>(
-                stream: FlutterCompass.events,
-                builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const CircularProgressIndicator();
+              }
 
-                  if (!snapshot.hasData) {
-                    return const CircularProgressIndicator(
-                      color: Colors.white,
-                    );
-                  }
+              final heading =
+                  snapshot.data?.heading ?? 0;
 
-                  final heading =
-                      snapshot.data?.heading ?? 0;
+              final qibla =
+                  calculateQiblaDirection(lat, lng);
 
-                  final qibla =
-                      calculateQiblaDirection(lat, lng);
+              /// Rotate ONLY the needle
+              final rotation =
+                  (qibla - heading) * (pi / 180);
 
-                  final rotation =
-                      (qibla - heading) * (pi / 180);
+              return Container(
+                height: compassSize,
+                width: compassSize,
 
-                  /// ⭐ PREMIUM STYLE (Static compass + rotating needle)
-                  return SizedBox(
-                    height: compassSize,
-                    width: compassSize,
-                    child: ClipOval(
-                      child: Container(
-                        color: Colors.white,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                        
-                            /// Compass background
-                            Image.asset(
-                              'assets/images/compass.png',
-                            ),
-                        
-                            /// Rotating needle
-                            Transform.rotate(
-                              angle: rotation,
-                              child: Image.asset(
-                                'assets/images/needle.png',
-                                height: compassSize * 0.7,
-                              ),
-                            ),
-                          ],
-                        ),
+                /// ⭐ Creates perfect circle + shadow
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color(0xFF016568),
+                ),
+
+                clipBehavior: Clip.hardEdge,
+
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    
+                     _buildDirectionLetters(compassSize),
+
+                    /// ✅ ROTATING NEEDLE
+                    Transform.rotate(
+                      angle: rotation,
+                      child: Image.asset(
+                        'assets/images/needle1.png',
+                        height: compassSize * 0.75,
                       ),
                     ),
-                  );
-                },
-              ),
-            ],
+                  ],
+                ),
+              );
+            },
           ),
         );
       },
 
-      /// ⭐ LOADING
+      /// ✅ LOADING
       loading: () => const Center(
         child: CircularProgressIndicator(),
       ),
 
-      /// ⭐ ERROR
-      error: (e, _) => Text(
-        "Location error: $e",
-        style: const TextStyle(color: Colors.red),
+      /// ✅ ERROR
+      error: (e, _) => Center(
+        child: Text(
+          "Location error: $e",
+          style: const TextStyle(color: Colors.red),
+        ),
       ),
     );
   }
+  Widget _buildDirectionLetters(double size) {
+
+    final textStyle = TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+      fontSize: size * 0.06,
+    );
+
+    return Stack(
+      children: [
+
+        /// North
+        Positioned(
+          top: size * 0.04,
+          left: 0,
+          right: 0,
+          child: Center(child: Text("N", style: textStyle)),
+        ),
+
+        /// South
+        Positioned(
+          bottom: size * 0.04,
+          left: 0,
+          right: 0,
+          child: Center(child: Text("S", style: textStyle)),
+        ),
+
+        /// East
+        Positioned(
+          right: size * 0.04,
+          top: 0,
+          bottom: 0,
+          child: Center(child: Text("E", style: textStyle)),
+        ),
+
+        /// West
+        Positioned(
+          left: size * 0.04,
+          top: 0,
+          bottom: 0,
+          child: Center(child: Text("W", style: textStyle)),
+        ),
+      ],
+    );
+  }
+
 }

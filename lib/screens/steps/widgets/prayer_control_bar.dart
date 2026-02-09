@@ -9,7 +9,6 @@ class PrayerControlBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final steps = ref.watch(prayerStepsProvider);
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 14),
@@ -50,18 +49,20 @@ class PrayerControlBar extends ConsumerWidget {
 
                   ref.read(currentRakatProvider.notifier).state = prevRakat;
 
-                  ref.read(prayerStepsProvider.notifier).state =
-                      buildSteps(
-                        isFirstRakat: prevRakat == 1,
-                        isSecondRakat: prevRakat == 2,
-                        isLastRakat: prevRakat == totalRakats,
-                        totalRakats: totalRakats,
-                        isWitr: rakatType == 'Witr',
-                      );
+                  final newSteps = buildSteps(
+  isFirstRakat: prevRakat == 1,
+  isSecondRakat: prevRakat == 2,
+  isLastRakat: prevRakat == totalRakats,
+  totalRakats: totalRakats,
+  isWitr: rakatType == 'Witr',
+);
 
-                  /// Jump to last step of previous rakat
-                  ref.read(currentStepIndexProvider.notifier).state =
-                      steps.length - 1;
+ref.read(prayerStepsProvider.notifier).state = newSteps;
+
+/// Now index is ALWAYS valid
+ref.read(currentStepIndexProvider.notifier).state =
+    newSteps.length - 1;
+
                 }
               }
             },
@@ -97,44 +98,64 @@ class PrayerControlBar extends ConsumerWidget {
             ),
             onPressed: () {
 
-              final stepIndex = ref.read(currentStepIndexProvider);
-              final steps = ref.read(prayerStepsProvider);
-              final currentRakat = ref.read(currentRakatProvider);
-              final totalRakats = ref.read(totalRakatsProvider);
-              final rakatType = ref.read(rakatTypeProvider);
+  final stepIndex = ref.read(currentStepIndexProvider);
+  final steps = ref.read(prayerStepsProvider);
+  final currentRakat = ref.read(currentRakatProvider);
+  final totalRakats = ref.read(totalRakatsProvider);
+  final rakatType = ref.read(rakatTypeProvider);
 
-              /// Move inside same rakat
-              if (stepIndex < steps.length - 1) {
-                ref.read(currentStepIndexProvider.notifier).state++;
-              }
+  final step = steps[stepIndex];
+  final repeat = ref.read(repeatCountProvider);
 
-              /// Go to next rakat
-              else {
+  /// 🔥 HANDLE REPEAT FIRST
+  if (repeat < step.repeat) {
 
-                if (currentRakat < totalRakats) {
+    ref.read(repeatCountProvider.notifier).state++;
 
-                  final nextRakat = currentRakat + 1;
+    return; // stay on same step
+  }
 
-                  ref.read(currentRakatProvider.notifier).state = nextRakat;
+  /// Reset repeat for next step
+  ref.read(repeatCountProvider.notifier).state = 1;
 
-                  ref.read(prayerStepsProvider.notifier).state =
-                      buildSteps(
-                        isFirstRakat: nextRakat == 1,
-                        isSecondRakat: nextRakat == 2,
-                        isLastRakat: nextRakat == totalRakats,
-                        totalRakats: totalRakats,
-                        isWitr: rakatType == 'Witr',
-                      );
+  /// Move inside same rakat
+  if (stepIndex < steps.length - 1) {
 
-                  ref.read(currentStepIndexProvider.notifier).state = 0;
-                }
+    ref.read(currentStepIndexProvider.notifier).state++;
 
-                /// All rakats finished
-                else {
-                  Navigator.pop(context);
-                }
-              }
-            },
+  }
+
+  /// Go to next rakat
+  else {
+
+    if (currentRakat < totalRakats) {
+
+      final nextRakat = currentRakat + 1;
+
+      ref.read(currentRakatProvider.notifier).state = nextRakat;
+
+      ref.read(prayerStepsProvider.notifier).state =
+          buildSteps(
+            isFirstRakat: nextRakat == 1,
+            isSecondRakat: nextRakat == 2,
+            isLastRakat: nextRakat == totalRakats,
+            totalRakats: totalRakats,
+            isWitr: rakatType == 'Witr',
+          );
+
+      ref.read(currentStepIndexProvider.notifier).state = 0;
+
+      /// 🔥 VERY IMPORTANT
+      ref.read(repeatCountProvider.notifier).state = 1;
+    }
+
+    /// All rakats finished
+    else {
+      Navigator.pop(context);
+    }
+  }
+}
+
           ),
         ],
       ),
