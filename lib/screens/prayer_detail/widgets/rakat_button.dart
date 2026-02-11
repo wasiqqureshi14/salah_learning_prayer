@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:salah_learning_prayer/data/prayers_step_data.dart';
+import 'package:salah_learning_prayer/providers/gender_provider.dart';
 import 'package:salah_learning_prayer/providers/prayer_steps_provider.dart';
 import 'package:salah_learning_prayer/screens/steps/prayer_steps_screen.dart';
 
@@ -33,9 +34,12 @@ class RakatButton extends ConsumerWidget {
  ref.read(rakatTypeProvider.notifier).state = type;
   ref.read(totalRakatsProvider.notifier).state = totalRakats;
   ref.read(currentRakatProvider.notifier).state = 1;
+  final gender = ref.watch(genderProvider)!;
+
 
   ref.read(prayerStepsProvider.notifier).state =
       buildSteps(
+          gender: gender,
         isFirstRakat: true,
         isSecondRakat: false,
         isLastRakat: totalRakats == 1,

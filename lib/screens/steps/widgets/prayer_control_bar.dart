@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:salah_learning_prayer/data/prayers_step_data.dart';
+import 'package:salah_learning_prayer/providers/gender_provider.dart';
 import 'package:salah_learning_prayer/providers/prayer_steps_provider.dart';
 
 class PrayerControlBar extends ConsumerWidget {
@@ -20,7 +21,7 @@ class PrayerControlBar extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
 
-          /// PREVIOUS BUTTON
+          /// PREVIOUS BUTTONss
           IconButton(
             icon: const Icon(
               Icons.skip_previous,
@@ -48,8 +49,11 @@ class PrayerControlBar extends ConsumerWidget {
                   final rakatType = ref.read(rakatTypeProvider);
 
                   ref.read(currentRakatProvider.notifier).state = prevRakat;
+                  final gender = ref.watch(genderProvider)!;
+
 
                   final newSteps = buildSteps(
+                      gender: gender,
   isFirstRakat: prevRakat == 1,
   isSecondRakat: prevRakat == 2,
   isLastRakat: prevRakat == totalRakats,
@@ -133,9 +137,12 @@ ref.read(currentStepIndexProvider.notifier).state =
       final nextRakat = currentRakat + 1;
 
       ref.read(currentRakatProvider.notifier).state = nextRakat;
+      final gender = ref.watch(genderProvider)!;
+
 
       ref.read(prayerStepsProvider.notifier).state =
           buildSteps(
+              gender: gender,
             isFirstRakat: nextRakat == 1,
             isSecondRakat: nextRakat == 2,
             isLastRakat: nextRakat == totalRakats,

@@ -127,9 +127,10 @@ class QiblaDirectionScreen extends ConsumerWidget {
                           width: double.infinity,
                           height: 50,
                           child: ElevatedButton.icon(
-                            onPressed: () {
-                              FlutterCompass.events;
-                            },
+                           onPressed: () {
+                               showCalibrationDialog(context);
+                                  },
+
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
                                   const Color(0xFF016568),
@@ -179,4 +180,48 @@ class QiblaDirectionScreen extends ConsumerWidget {
       ),
     );
   }
+}
+void showCalibrationDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 24,
+            vertical: 30,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: const [
+
+              /// Infinity Icon
+              Icon(
+                Icons.all_inclusive,
+                size: 70,
+                color: Color(0xFF016568),
+              ),
+
+              SizedBox(height: 20),
+
+              /// Text
+              Text(
+                "Move your phone in a figure 8 motion for better compass accuracy.",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }

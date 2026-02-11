@@ -43,7 +43,6 @@ class PrayerStepsScreen extends ConsumerWidget {
       body: SafeArea(
         child: Column(
           children: [
-
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -51,8 +50,8 @@ class PrayerStepsScreen extends ConsumerWidget {
                   children: [
 
                     Container(
-                      margin: const EdgeInsets.all(16),
-                      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+                      margin: const EdgeInsets.symmetric(vertical: 4),
+                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                        width: MediaQuery.of(context).size.width * 0.65,
                       decoration: BoxDecoration(
                         color: const Color(0xFF016568),
@@ -71,7 +70,7 @@ class PrayerStepsScreen extends ConsumerWidget {
                     ),
 
                       Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 4),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -104,7 +103,7 @@ class PrayerStepsScreen extends ConsumerWidget {
 
                     /// IMAGE (FLEXIBLE PREVENTS OVERFLOW)
                     Flexible(
-                      flex: 4,
+                      flex: 3,
                       child: Image.asset(
                         step.image,
                         width: double.infinity,
@@ -131,13 +130,13 @@ class PrayerStepsScreen extends ConsumerWidget {
 
                     /// ARABIC TEXT
                     Flexible(
-                      flex: 2,
+                      flex: 1,
                       child: Center(
                         child: Text(
                           step.arabic,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                             color: Colors.black,
                           ),
                         ),
@@ -169,14 +168,15 @@ class PrayerStepsScreen extends ConsumerWidget {
                           step.translation,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                             color: Colors.black,
                           ),
                         ),
                       ),
                     ),
 
-                    const SizedBox(height: 10),
+                  const SizedBox(height: 4),
+
                   ],
                 ),
               ),

@@ -1,6 +1,9 @@
+import 'package:salah_learning_prayer/models/gender.dart';
+
 import '../models/prayer_step.dart';
 
 List<PrayerStep> buildSteps({
+   required Gender gender,
   required bool isFirstRakat,
   required bool isLastRakat,
   required bool isSecondRakat,
@@ -8,6 +11,13 @@ List<PrayerStep> buildSteps({
   required bool isWitr,
 }) {
   final steps = <PrayerStep>[];
+  String getImage(String imageName, Gender gender) {
+  if (gender == Gender.male) {
+    return 'assets/images/male/$imageName';
+  } else {
+    return 'assets/images/female/$imageName';
+  }
+}
 
   // 🔹 Only once in whole prayer
   if (isFirstRakat) {
@@ -15,28 +25,28 @@ List<PrayerStep> buildSteps({
        PrayerStep(
         order: 1,
         title: 'Niyyah (Intention)',
-        image: 'assets/images/p14-01.webp',
+       image: getImage('p14-01.webp', gender),
         arabic: '  نَوَايْتُ اَنْ اُصَلِّىَ لِلَّهِ تَعَالَى اَرْبَعَ رَكَعَاتِ صَلَوةِ الْظُهْرِ فَرْضُ اللهِ تَعَالَى مُتَوَجِّهًا اِلَى جِهَةِ الْكَعْبَةِ الشَّرِيْفَةِ اَللهُ اَكْبَرُ',
         translation: 'I intend to perform four Rakats of the obligatory Zuhr prayer for Allah Almighty.',
       ),
        PrayerStep(
         order: 2,
         title: 'Takbeer-e-Tahreema:',
-        image: 'assets/images/p12-01.webp',
+        image: getImage('p12-01.webp', gender),
         arabic: 'اللَّهُ أَكْبَر',
         translation: 'Allah is the Greatest.',
       ),
        PrayerStep(
         order: 3,
         title: 'Sana',
-        image: 'assets/images/p7-01.webp',
+        image: getImage('p7-01.webp', gender) ,
         arabic: ' سُبْحَانَكَ اللّٰهُمَّ وَبِحَمْدِكَ وَتَبَارَكَ اسْمُكَ وَتَعَالٰى جَدُّكَ وَلَا إِلٰهَ غَيْرُكَ',
         translation: 'Glory is to You, O Allah, and praise. Blessed is Your Name Exalted is Your Majesty, and there is no god besides You.',
       ),
        PrayerStep(
         order: 4,
         title: 'Ta,awwudh',
-        image: 'assets/images/p7-01.webp',
+        image: getImage('p7-01.webp', gender),
         arabic: 'أَعُوذُ بِاللّٰهِ مِنَ الشَّيْطَانِ الرَّجِيمِ',
         translation: 'In the name of Allah, the Most Merciful,the Most Compassionate.',
       ),
@@ -48,28 +58,28 @@ List<PrayerStep> buildSteps({
      PrayerStep(
       order: 5,
       title: ' Tasmiyah',
-      image: 'assets/images/p7-01.webp',
+     image: getImage('p7-01.webp', gender),
       arabic: 'بِسْمِ اللّٰهِ الرَّحْمَٰنِ الرَّحِيمِ ',
       translation: 'In the name of Allah, the Most Merciful,the Most Compassionate.',
     ),
     PrayerStep(
       order: 6,
       title: 'Surah Al-Fatiha',
-      image: 'assets/images/p7-01.webp',
+      image: getImage('p7-01.webp', gender),
       arabic: 'الْحَمْدُ لِلّٰهِ رَبِّ الْعَالَمِينَ الرَّحْمَٰنِ الرَّحِيمِ مَالِكِ يَوْمِ الدِّينِ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ',
       translation: 'All praise is for Allah, the Lord of all worlds. The Most Merciful, the Most Compassionate.  Master of the Day of Judgment. You alone we worship, and You alone we ask for help.Guide us to the straight path. The path of those You have blessed, not of those who earned Youranger nor of those who went astray.',
     ),
     PrayerStep(
       order: 7,
       title: 'Surah Al-Ikhlas',
-      image: 'assets/images/p7-01.webp',
+     image: getImage('p7-01.webp', gender),
       arabic: 'قُلْ هُوَ اللّٰهُ أَحَدٌ اللّٰهُ الصَّمَدُ لَمْ يَلِدْ وَلَمْ يُولَدْ وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ',
       translation: 'Say: He is Allah, the One. Allah, the Eternal Refuge. He neither begets nor is born. Nor is there to Him any equivalent.',
     ),
      PrayerStep(
       order: 8,
       title: 'Ruku',
-      image: 'assets/images/p8-01.webp',
+      image: getImage('p8-01.webp', gender),
       arabic: 'سُبْحَانَ رَبِّيَ الْعَظِيمِ',
       translation: 'Glory be to my Lord, the Most Great.',
        repeat: 3,
@@ -77,14 +87,14 @@ List<PrayerStep> buildSteps({
     PrayerStep(
       order: 9,
       title: 'Standing After Ruku',
-      image: 'assets/images/p14-01.webp',
+     image: getImage('p14-01.webp', gender),
       arabic: 'سَمِعَ اللّٰهُ لِمَنْ حَمِدَهُ رَبَّنَا لَكَ الْحَمْدُ',
       translation: 'Allah hears the one who praises Him. Our Lord, all praise is for You.',
     ),
      PrayerStep(
       order: 10,
       title: 'First Sajda',
-      image: 'assets/images/p9-01.webp',
+     image: getImage('p9-01.webp', gender),
       arabic: 'سُبْحَانَ رَبِّيَ الْأَعْلَى',
       translation: 'Glory be to my Lord, the Most High.',
        repeat: 3,
@@ -92,14 +102,14 @@ List<PrayerStep> buildSteps({
     PrayerStep(
       order: 11,
       title: 'Jalsa',
-      image: 'assets/images/p11-01.webp',
+      image: getImage('p11-01.webp', gender),
       arabic: 'رَبِّ اغْفِرْ لِي',
       translation: 'My Lord, forgive me.',
     ),
      PrayerStep(
       order: 12,
       title: 'Second Sajda',
-      image: 'assets/images/p9-01.webp',
+     image: getImage('p9-01.webp', gender),
       arabic: 'سُبْحَانَ رَبِّيَ الْأَعْلَى',
       translation: 'Glory be to my Lord, the Most High.',
        repeat: 3,
@@ -112,7 +122,7 @@ List<PrayerStep> buildSteps({
        PrayerStep(
         order: 13,
         title: 'Qaida (Tashahhud)',
-        image: 'assets/images/p11-01.webp',
+      image: getImage('p11-01.webp', gender),
         arabic: 'التَّحِيَّاتُ لِلَّهِ...',
         translation: 'Recite Tashahhud.',
       ),
@@ -125,7 +135,7 @@ List<PrayerStep> buildSteps({
        PrayerStep(
         order: 14,
         title: 'Stand for Next Rakat',
-        image: 'assets/images/p7-01.webp',
+       image: getImage('p7-01.webp', gender),
         arabic: 'اللَّهُ أَكْبَر',
         translation: 'Allah is the Greatest.',
       ),
@@ -139,7 +149,7 @@ List<PrayerStep> buildSteps({
          PrayerStep(
           order: 15,
           title: 'Qunoot',
-          image: 'assets/images/p7-01.webp',
+        image: getImage('p7-01.webp', gender),
           arabic: 'اللَّهُمَّ اهْدِنِي...',
           translation: 'Dua e Qunoot.',
         ),
@@ -150,7 +160,7 @@ List<PrayerStep> buildSteps({
      PrayerStep(
         order: 16,
         title: 'Final Qaida ',
-        image: 'assets/images/p11-01.webp',
+       image: getImage('p11-01.webp', gender),
         arabic: 'السَّلَامُ عَلَيْكُمْ',
         translation:
             'Recite Tashahhud, Durood, Dua, then say Salam.',
@@ -160,7 +170,7 @@ List<PrayerStep> buildSteps({
        PrayerStep(
         order: 17,
         title: 'Darood Shareef ',
-        image: 'assets/images/p11-01.webp',
+       image: getImage('p11-01.webp', gender),
         arabic: 'السَّلَامُ عَلَيْكُمْ',
         translation:
             'Recite Tashahhud, Durood, Dua, then say Salam.',
@@ -170,7 +180,7 @@ List<PrayerStep> buildSteps({
        PrayerStep(
         order: 18,
         title: 'Salam On Left Side ',
-        image: 'assets/images/p3-01.webp',
+       image: getImage('p3-01.webp', gender),
         arabic: 'السَّلَامُ عَلَيْكُمْ',
         translation:
             'Recite Tashahhud, Durood, Dua, then say Salam.',
@@ -180,7 +190,7 @@ List<PrayerStep> buildSteps({
        PrayerStep(
         order: 19,
         title: 'Salam On Right Side ',
-        image: 'assets/images/p3-01.webp',
+       image: getImage('p3-01.webp', gender),
         arabic: 'السَّلَامُ عَلَيْكُمْ',
         translation:
             'Recite Tashahhud, Durood, Dua, then say Salam.',

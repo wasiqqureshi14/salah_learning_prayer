@@ -11,7 +11,6 @@ class QiblaSection extends StatelessWidget {
       builder: (context, constraints) {
 
         final size = constraints.maxHeight * 0.75;
-        // uses 75% of available space -> SAFE
 
         return Center(
           child: QiblaCard(size: size),

@@ -47,9 +47,8 @@ class HomeScreen extends ConsumerWidget {
       child: const QiblaSection(),
     ),
 
-  ],
-);
-
+            ],
+          );
             },
           ),
           

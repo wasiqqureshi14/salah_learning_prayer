@@ -35,7 +35,7 @@ class PrayerDetailScreen extends ConsumerWidget {
                       child: Opacity(
                         opacity: 0.2,
                         child: SvgPicture.asset(
-                          'assets/images/mosque.svg',
+                          'assets/images/mosque/mosque.svg',
                           fit: BoxFit.contain,
                          
                         ),

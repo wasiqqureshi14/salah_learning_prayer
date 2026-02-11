@@ -58,7 +58,7 @@ class PrayerCard extends StatelessWidget {
               time,
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 11,
+                fontSize: 10,
               ),
             ),
           ],

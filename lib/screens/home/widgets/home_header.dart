@@ -34,7 +34,7 @@ class HomeHeader extends ConsumerWidget {
               child: Opacity(
                 opacity: 0.8,
                 child: SvgPicture.asset(
-                  'assets/images/mosque.svg',
+                  'assets/images/mosque/mosque.svg',
                   fit: BoxFit.contain,
                 
                 ),
@@ -44,7 +44,7 @@ class HomeHeader extends ConsumerWidget {
             /// ✅ MAIN CONTAINER
             Container(
               padding: EdgeInsets.only(
-                top: height * 0.12,   // was 50
+                top: height * 0.10,   // was 50
                 bottom: height * 0.10, // was 50
               ),
               decoration: BoxDecoration(
@@ -58,12 +58,12 @@ class HomeHeader extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
 
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-
                             /// TIME
                             ref.watch(currentTimeProvider).when(
                               data: (now) => Text(
@@ -89,9 +89,16 @@ class HomeHeader extends ConsumerWidget {
                                 final now = DateTime.now();
                                 final remaining = PrayerService.getRemainingTime(times);
 
-                                    if (remaining == null) {
-                                      return const SizedBox(); // EMPTY during forbidden gap
-                                    }
+                                   if (remaining == null) {
+                                              return Text(
+                                                'No Prayer Time Now',
+                                                style: TextStyle(
+                                                  color: Colors.white54,
+                                                  fontSize: height * 0.045,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              );
+                                            }
 
                                     final remainingText =
                                         '${remaining.inHours.toString().padLeft(2, '0')}:'
@@ -113,11 +120,21 @@ class HomeHeader extends ConsumerWidget {
                             ),
                           ],
                         ),
+                         IconButton(
+        icon: const Icon(
+          Icons.settings,
+          size: 32,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          
+        },
+      ),
                       ],
                     ),
                   ),
 
-                  SizedBox(height: height * 0.04),
+                  SizedBox(height: height * 0.08),
 
                   /// 🔥 CRITICAL FIX
                   /// Expanded instead of Flexible
@@ -158,43 +175,43 @@ class HomeHeader extends ConsumerWidget {
                        return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: Row(
-  children: prayers.map((prayer) {
+                          children: prayers.map((prayer) {
 
-    final prayerTime = prayer["time"] as DateTime;
-    
+                            final prayerTime = prayer["time"] as DateTime;
+                            
 
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4),
-        child: PrayerCard(
-          name: prayer["name"] as String,
-          time: DateFormat('hh:mm a').format(prayerTime),
-          icon: SvgPicture.asset(
-            prayer["icon"] as String,
-            color: Colors.white,
-          ),
-          isActive: prayer["enum"] == currentPrayer,
-          onTap: () {
+                            return Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 4),
+                                child: PrayerCard(
+                                  name: prayer["name"] as String,
+                                  time: DateFormat('hh:mm a').format(prayerTime),
+                                  icon: SvgPicture.asset(
+                                    prayer["icon"] as String,
+                                    color: Colors.white,
+                                  ),
+                                  isActive: prayer["enum"] == currentPrayer,
+                                  onTap: () {
 
-            ref.read(selectedPrayerProvider.notifier).state =
-                prayerData[prayer["name"]
-                    .toString()
-                    .toLowerCase()]!;
+                                    ref.read(selectedPrayerProvider.notifier).state =
+                                        prayerData[prayer["name"]
+                                            .toString()
+                                            .toLowerCase()]!;
 
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const PrayerDetailScreen(),
-              ),
-            );
-            if (!context.mounted) return;
-          },
-        ),
-      ),
-    );
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => const PrayerDetailScreen(),
+                                      ),
+                                    );
+                                    if (!context.mounted) return;
+                                  },
+                                ),
+                              ),
+                            );
 
-  }).toList(),
-)
+                          }).toList(),
+                        )
 
                       );
 
@@ -209,16 +226,7 @@ class HomeHeader extends ConsumerWidget {
               ),
             ),
 
-            /// ✅ SETTINGS (Safe position)
-            Positioned(
-              top: height * 0.06,
-              right: 20,
-              child: const Icon(
-                Icons.settings,
-                size: 32,
-                color: Colors.white,
-              ),
-            ),
+            
           ],
         );
       },

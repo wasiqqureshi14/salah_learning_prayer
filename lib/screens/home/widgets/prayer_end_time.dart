@@ -34,7 +34,7 @@ class PrayerEndCard extends ConsumerWidget {
                   children: [
 
                     /// TITLE
-                    FittedBox( // 🔥 prevents overflow automatically
+                    FittedBox( 
                       child: Text(
                         "${currentPrayer.name.toUpperCase()} Ends At",
                         style: TextStyle(

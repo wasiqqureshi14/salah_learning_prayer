@@ -70,7 +70,7 @@ class QiblaCard extends ConsumerWidget {
                     Transform.rotate(
                       angle: rotation,
                       child: Image.asset(
-                        'assets/images/needle1.png',
+                        'assets/images/mosque/needle.png',
                         height: compassSize * 0.75,
                       ),
                     ),
