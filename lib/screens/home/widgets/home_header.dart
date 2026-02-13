@@ -4,11 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:salah_learning_prayer/core/services/prayer_services.dart';
+import 'package:salah_learning_prayer/models/gender.dart';
+import 'package:salah_learning_prayer/providers/gender_provider.dart';
 import 'package:salah_learning_prayer/providers/prayer_time_provider.dart';
 import 'package:salah_learning_prayer/providers/time_provider.dart';
 import 'package:salah_learning_prayer/screens/prayer_detail/prayer_detail_screen.dart';
 import 'package:salah_learning_prayer/providers/prayer_provider.dart';
 import 'package:salah_learning_prayer/data/prayers_data.dart';
+import 'package:salah_learning_prayer/screens/settings/setting.dart';
 import 'prayer_card.dart';
 
 class HomeHeader extends ConsumerWidget {
@@ -120,24 +123,28 @@ class HomeHeader extends ConsumerWidget {
                             ),
                           ],
                         ),
-                         IconButton(
-        icon: const Icon(
-          Icons.settings,
-          size: 32,
-          color: Colors.white,
-        ),
-        onPressed: () {
-          
-        },
+                        IconButton(
+  icon: const Icon(Icons.settings_outlined,
+      size: 32,
+      color: Colors.white),
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const Settingscreen(),
       ),
+    );
+  },
+)
+
+
                       ],
                     ),
                   ),
 
                   SizedBox(height: height * 0.08),
 
-                  /// 🔥 CRITICAL FIX
-                  /// Expanded instead of Flexible
+                  
                   Expanded(
                     child: ref.watch(prayerTimesProvider).when(
                       data: (times) {

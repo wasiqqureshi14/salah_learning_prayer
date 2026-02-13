@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:salah_learning_prayer/core/theme/app_theme.dart';
-import 'package:salah_learning_prayer/screens/gender_selection/gender_selection.dart';
+import 'package:salah_learning_prayer/screens/app_startup/app_startup_screen.dart';
 
 void main() {
     WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +26,7 @@ class SalahApp extends StatelessWidget {
       
       themeMode: ThemeMode.light,
 
-      home: const GenderSelectionScreen(),
+     home: const AppStartup(),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:salah_learning_prayer/screens/salah_steps/salah_steps.dart';
 import '../widgets/menu_items.dart';
 import 'package:salah_learning_prayer/screens/qibla_compass/qibla_compass.dart';
 
@@ -34,7 +35,11 @@ class MenuGrid extends StatelessWidget {
               height: screenHeight * 0.045, // responsive icon
               color: Colors.white,
             ),
-            onTap: () {},
+            onTap: () { 
+              Navigator.push(
+                context, MaterialPageRoute(builder: (_)=> DemoStepsScreen())
+              );
+            },
           ),
 
           MenuItem(
@@ -50,7 +55,7 @@ class MenuGrid extends StatelessWidget {
           MenuItem(
             title: 'Qibla\nDirection',
             icon: SvgPicture.asset(
-              "assets/icons/kibla direction-01.svg",
+              "assets/icons/kibla-direction-01.svg",
               height: screenHeight * 0.045,
               color: Colors.white,
             ),

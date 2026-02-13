@@ -1,11 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_compass/flutter_compass.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:salah_learning_prayer/providers/qibla_providers/needle_rotation_provider.dart';
 import 'package:salah_learning_prayer/widgets/qibla_card.dart';
 import 'package:salah_learning_prayer/providers/location_provider.dart';
-import 'package:salah_learning_prayer/core/utils/qibla_helper.dart';
 
 class QiblaDirectionScreen extends ConsumerWidget {
   const QiblaDirectionScreen({super.key});
@@ -13,163 +11,158 @@ class QiblaDirectionScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth  = MediaQuery.of(context).size.width;
+
     final locationAsync = ref.watch(locationProvider);
 
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: const SystemUiOverlayStyle(
-        statusBarColor: Colors.white,
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness: Brightness.light,
-      ),
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: Colors.white,
+         appBar: AppBar(
+          toolbarHeight: 72,
+        elevation: 0,
+        centerTitle: false,
+        backgroundColor: Color(0xFF016568),
+
+         leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+
+        title: Text(
+          "Qibla Direction",
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+
+        actions: [
+      Padding(
+        padding: const EdgeInsets.only(right: 10),
+        child: IconButton(
+          icon: const Icon(Icons.settings_outlined, color: Colors.white, size: 32,),
+          onPressed: () {
+            // open settings
+          },
+        ),
+      ),
+    ],
+  ),
+      
+
         body: SafeArea(
           child: locationAsync.when(
 
-            /// ✅ LOCATION SUCCESS
-            data: (position) {
+            data: (_) {
 
-              final lat = position.latitude;
-              final lng = position.longitude;
+              final rotation =
+                  ref.watch(needleRotationProvider);
 
-              return StreamBuilder<CompassEvent>(
-                stream: FlutterCompass.events,
-                builder: (context, snapshot) {
+              return Column(
+                children: [
 
-                  double directionText = 0;
+                SizedBox(height: screenHeight * 0.07),
 
-                  if (snapshot.hasData) {
-                    final heading =
-                        snapshot.data?.heading ?? 0;
 
-                    final qibla =
-                        calculateQiblaDirection(lat, lng);
+                  const Text(
+                    "Point the top of the phone towards the Qibla",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.w700
+                    ),
+                  ),
 
-                    directionText =
-                        (qibla - heading + 360) % 360;
-                  }
+                 SizedBox(height: screenHeight * 0.07),
 
-                  return Column(
-                    children: [
 
-                      const SizedBox(height: 20),
+                  LayoutBuilder(
+                    builder: (context, constraints) {
 
-                      /// TITLE
-                      const Text(
-                        "Qibla Direction",
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF016568),
-                        ),
-                      ),
+                      double size = screenWidth * 0.75;
 
-                      const SizedBox(height: 6),
+                      size = size.clamp(220.0, 420.0);
 
-                      /// SUBTITLE
-                      const Text(
-                        "Point the top of the phone towards the Qibla",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.black54,
-                        ),
-                      ),
 
-                      const Spacer(),
+                      return QiblaCard(size: size,kaabaSize: 35,);
+                    },
+                  ),
 
-                      /// COMPASS (YOUR OLD WIDGET)
-                      LayoutBuilder(
-                        builder: (context, constraints) {
+                 SizedBox(height: screenHeight * 0.07),
 
-                          double size =
-                              constraints.maxWidth * 0.75;
+                  Text(
+                    "${rotation.toStringAsFixed(0)}°",
+                    style: const TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF016568),
+                    ),
+                  ),
 
-                          if (size > 380) {
-                            size = 380;
-                          }
+                 SizedBox(height: screenHeight * 0.02),
 
-                          return QiblaCard(size: size);
+
+                  const Text(
+                    "Facing Kaaba in Makkah",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.black54,
+                    ),
+                  ),
+
+                  SizedBox(height: screenHeight * 0.03),
+
+
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.08,
+                    ),
+                    child: SizedBox(
+                      height: (screenHeight * 0.065).clamp(48.0, 60.0),
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          showCalibrationDialog(context);
                         },
-                      ),
-
-                      const Spacer(),
-
-                      /// DIRECTION TEXT
-                      Text(
-                        "${directionText.toStringAsFixed(0)}°",
-                        style: const TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF016568),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color(0xFF016568),
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(30),
+                          ),
+                          elevation: 0,
                         ),
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      /// LOCATION TEXT
-                      const Text(
-                        "Facing Kaaba in Makkah",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.black54,
+                        icon: const Icon(
+                          Icons.explore,
+                          color: Colors.white,
                         ),
-                      ),
-
-                      const SizedBox(height: 25),
-
-                      /// CALIBRATE BUTTON
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 40,
-                        ),
-                        child: SizedBox(
-                          width: double.infinity,
-                          height: 50,
-                          child: ElevatedButton.icon(
-                           onPressed: () {
-                               showCalibrationDialog(context);
-                                  },
-
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color(0xFF016568),
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(30),
-                              ),
-                              elevation: 0,
-                            ),
-                            icon: const Icon(
-                              Icons.explore,
-                              color: Colors.white,
-                            ),
-                            label: const Text(
-                              "CALIBRATE",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1,
-                              ),
-                            ),
+                        label: const Text(
+                          "CALIBRATE",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1,
                           ),
                         ),
                       ),
+                    ),
+                  ),
 
-                      const SizedBox(height: 30),
-                    ],
-                  );
-                },
+                  const SizedBox(height: 30),
+                ],
               );
             },
 
-            /// ✅ LOADING
             loading: () => const Center(
               child: CircularProgressIndicator(),
             ),
 
-            /// ✅ ERROR
-            error: (e, _) => Center(
+            error: (_, __) => const Center(
               child: Text(
                 "Location error",
                 style: TextStyle(color: Colors.red),
@@ -177,16 +170,17 @@ class QiblaDirectionScreen extends ConsumerWidget {
             ),
           ),
         ),
-      ),
     );
   }
 }
+
 void showCalibrationDialog(BuildContext context) {
   showDialog(
     context: context,
     barrierDismissible: true,
     builder: (context) {
       return Dialog(
+        backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
@@ -214,8 +208,8 @@ void showCalibrationDialog(BuildContext context) {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black,
                 ),
               ),
             ],

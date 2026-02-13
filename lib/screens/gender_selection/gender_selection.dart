@@ -60,7 +60,7 @@ class GenderSelectionScreen extends ConsumerWidget {
                   ),
                 ),
                 onPressed: () {
-                  ref.read(genderProvider.notifier).state = Gender.male;
+                  ref.read(genderProvider.notifier).setGender(Gender.male);
      
                   Navigator.pushReplacement(
                     context,
@@ -90,7 +90,8 @@ class GenderSelectionScreen extends ConsumerWidget {
                   ),
                 ),
                 onPressed: () {
-                  ref.read(genderProvider.notifier).state = Gender.female;
+                 ref.read(genderProvider.notifier).setGender(Gender.female);
+
      
                   Navigator.pushReplacement(
                     context,

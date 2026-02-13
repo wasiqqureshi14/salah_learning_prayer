@@ -1,101 +1,117 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_compass/flutter_compass.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:salah_learning_prayer/providers/location_provider.dart';
-import 'package:salah_learning_prayer/core/utils/qibla_helper.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:salah_learning_prayer/providers/qibla_providers/needle_rotation_provider.dart';
+import 'package:salah_learning_prayer/providers/qibla_providers/qibla_provider.dart';
+
 
 class QiblaCard extends ConsumerWidget {
   final double? size;
+  final double kaabaSize;
+final Color? kaabaColor;
+
 
   const QiblaCard({
     super.key,
     this.size,
+    this.kaabaSize = 28, // ⭐ default
+  this.kaabaColor,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final locationAsync = ref.watch(locationProvider);
+    final compassSize =
+        size ?? MediaQuery.of(context).size.width * 0.65;
 
-    return locationAsync.when(
+    final rotation =
+        ref.watch(needleRotationProvider);
 
-      /// ✅ LOCATION SUCCESS
-      data: (position) {
+    final qiblaAngle =
+        ref.watch(qiblaProvider);
 
-        final lat = position.latitude;
-        final lng = position.longitude;
+    /// convert to radians
+    final kaabaRadians = qiblaAngle * pi / 180;
 
-        final compassSize =
-            size ?? MediaQuery.of(context).size.width * 0.65;
+    final radius = compassSize / 2;
+      final double iconSize = kaabaSize;
+      final center = compassSize / 2;
 
-        return Center(
-          child: StreamBuilder<CompassEvent>(
-            stream: FlutterCompass.events,
-            builder: (context, snapshot) {
+      /// distance ABOVE the outline
+      final double offset = iconSize * 0.35; 
+      // scales automatically with icon size
 
-              if (!snapshot.hasData) {
-                return const CircularProgressIndicator();
-              }
+      final kaabaX =
+          center + (radius + offset) * cos(kaabaRadians) - iconSize / 2;
 
-              final heading =
-                  snapshot.data?.heading ?? 0;
+      final kaabaY =
+          center + (radius + offset) * sin(kaabaRadians) - iconSize / 2;
 
-              final qibla =
-                  calculateQiblaDirection(lat, lng);
 
-              /// Rotate ONLY the needle
-              final rotation =
-                  (qibla - heading) * (pi / 180);
+    return Center(
+      child: Container(
+        height: compassSize,
+        width: compassSize,
+        decoration:  BoxDecoration(
+          shape: BoxShape.circle,
+          color: Color(0xFF016568),
+           border: Border.all(
+      color: Colors.white,
+      width: compassSize * 0.04, // ⭐ responsive thickness
+    ),
+        ),
+     
+        child: Stack(
+           clipBehavior: Clip.none,
+          alignment: Alignment.center,
+          children: [
 
-              return Container(
-                height: compassSize,
-                width: compassSize,
-
-                /// ⭐ Creates perfect circle + shadow
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color(0xFF016568),
-                ),
-
-                clipBehavior: Clip.hardEdge,
-
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    
-                     _buildDirectionLetters(compassSize),
-
-                    /// ✅ ROTATING NEEDLE
-                    Transform.rotate(
-                      angle: rotation,
-                      child: Image.asset(
-                        'assets/images/mosque/needle.png',
-                        height: compassSize * 0.75,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        );
-      },
-
-      /// ✅ LOADING
-      loading: () => const Center(
-        child: CircularProgressIndicator(),
+             Container(
+      height: compassSize * 0.85,
+      width: compassSize * 0.85,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: Colors.white,
+          width: compassSize * 0.02,
+        ),
       ),
+    ),
 
-      /// ✅ ERROR
-      error: (e, _) => Center(
-        child: Text(
-          "Location error: $e",
-          style: const TextStyle(color: Colors.red),
+            _buildDirectionLetters(compassSize),
+
+            /// ⭐ KAABA (small, outlined position)
+            Positioned(
+              left: kaabaX,
+              top: kaabaY,
+              child:SvgPicture.asset(
+                'assets/images/mosque/kaaba-svgrepo-com.svg',
+                height: kaabaSize,
+                colorFilter: kaabaColor != null
+                    ? ColorFilter.mode(
+                        kaabaColor!,
+                        BlendMode.srcIn,
+                      )
+                    : null,
+              ),
+
+            ),
+
+            /// ROTATING NEEDLE
+            Transform.rotate(
+              angle: rotation * (pi / 180),
+              child: Image.asset(
+                'assets/images/mosque/needle.png',
+                height: compassSize * 0.75,
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
+
   Widget _buildDirectionLetters(double size) {
 
     final textStyle = TextStyle(
@@ -107,39 +123,34 @@ class QiblaCard extends ConsumerWidget {
     return Stack(
       children: [
 
-        /// North
         Positioned(
-          top: size * 0.04,
+          top: size * 0.08,
           left: 0,
           right: 0,
           child: Center(child: Text("N", style: textStyle)),
         ),
 
-        /// South
         Positioned(
-          bottom: size * 0.04,
+          bottom: size * 0.08,
           left: 0,
           right: 0,
           child: Center(child: Text("S", style: textStyle)),
         ),
 
-        /// East
         Positioned(
-          right: size * 0.04,
+          right: size * 0.08,
           top: 0,
           bottom: 0,
           child: Center(child: Text("E", style: textStyle)),
         ),
 
-        /// West
         Positioned(
-          left: size * 0.04,
-          top: 0,
+          left: size * 0.08,
+          top:0,
           bottom: 0,
           child: Center(child: Text("W", style: textStyle)),
         ),
       ],
     );
   }
-
 }

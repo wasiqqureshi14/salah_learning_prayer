@@ -13,7 +13,7 @@ class QiblaSection extends StatelessWidget {
         final size = constraints.maxHeight * 0.75;
 
         return Center(
-          child: QiblaCard(size: size),
+          child: QiblaCard(size: size,kaabaSize: 14,),
         );
       },
     );

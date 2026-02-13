@@ -1,17 +1,13 @@
 import 'package:adhan/adhan.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'location_provider.dart';
+import 'package:salah_learning_prayer/providers/setting_providers/coordinate_provider.dart';
+
 
 final prayerTimesProvider =
     FutureProvider<PrayerTimes>((ref) async {
 
-  final position =
-      await ref.watch(locationProvider.future);
-
-  final coordinates = Coordinates(
-    position.latitude,
-    position.longitude,
-  );
+ final coordinates =
+    await ref.watch(coordinatesProvider.future);
 
   final params =
       CalculationMethod.muslim_world_league
