@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:salah_learning_prayer/screens/namaz_faraiz/namaz_faraiz_screen.dart';
 import 'package:salah_learning_prayer/screens/salah_steps/salah_steps.dart';
 import '../widgets/menu_items.dart';
 import 'package:salah_learning_prayer/screens/qibla_compass/qibla_compass.dart';
@@ -86,7 +87,14 @@ class MenuGrid extends StatelessWidget {
               height: screenHeight * 0.045,
               color: Colors.white,
             ),
-            onTap: () {},
+            onTap: () {
+               Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const NamazFaraizScreen(),
+                ),
+              );
+            },
           ),
 
           MenuItem(

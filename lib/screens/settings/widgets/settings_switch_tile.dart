@@ -25,7 +25,7 @@ class SettingsSwitchTile extends StatelessWidget {
         ),
       ),
       value: value,
-      activeColor: const Color(0xFF2FA4A9),
+      activeColor: Color(0xFF016568),
       onChanged: onChanged,
     );
   }

@@ -5,6 +5,7 @@ import 'package:salah_learning_prayer/screens/app_startup/app_startup_screen.dar
 
 void main() {
     WidgetsFlutterBinding.ensureInitialized();
+    
   runApp(
     ProviderScope(
     child: SalahApp(),
