@@ -8,7 +8,7 @@
 
 
     <application
-        android:label="salah_learning_prayer"
+        android:label="Salah Learning"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

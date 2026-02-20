@@ -48,6 +48,7 @@ dependencies:
   timezone: ^0.10.1
   android_alarm_manager_plus: ^5.0.0
   flutter_native_splash: ^2.4.7
+  flutter_launcher_icons: ^0.14.4
 
 
 
@@ -102,6 +103,12 @@ flutter_native_splash:
   android_12:
     color: "#016568"
     image: assets/images/mosque/logo1.png
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/mosque/Logo-icon.png"
+  adaptive_icon_background: "#016568"    
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

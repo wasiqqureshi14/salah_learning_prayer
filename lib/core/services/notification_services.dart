@@ -7,25 +7,25 @@ class NotificationService {
   static final FlutterLocalNotificationsPlugin _plugin =
       FlutterLocalNotificationsPlugin();
 
+  static bool _initialized = false;
+
   /// ================= INIT =================
   static Future<void> init() async {
 
-    /// REQUIRED for zoned scheduling
+    if (_initialized) return; // ✅ prevents re-init
+
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation('Asia/Karachi'));
 
-    const AndroidInitializationSettings androidSettings =
+    const androidSettings =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    const InitializationSettings settings =
+    const settings =
         InitializationSettings(android: androidSettings);
 
-    /// ✅ v20 initialize (POSITIONAL again)
     await _plugin.initialize( settings: settings);
 
-    /// Create notification channel
-    const AndroidNotificationChannel channel =
-        AndroidNotificationChannel(
+    const channel = AndroidNotificationChannel(
       'prayer_channel_id',
       'Prayer Notifications',
       description: 'Prayer time alerts',
@@ -37,32 +37,33 @@ class NotificationService {
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
-    /// Android 13+
     await _plugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.requestNotificationsPermission();
 
+    _initialized = true;
+
     print("✅ Notification initialized");
   }
 
-
+  /// ================= SCHEDULE =================
   static Future<void> schedulePrayer({
     required int id,
     required String title,
     required DateTime prayerTime,
     required bool showNotification,
-    
   }) async {
-      print("PLUGIN INITIALIZED ?");
+
+    if (!_initialized) return; // ✅ no work before init
 
     final scheduled =
         tz.TZDateTime.from(prayerTime, tz.local);
 
     await _plugin.zonedSchedule(
       id: id,
-      title: title,
-     body:  "It's time for prayer",
+     title:  title,
+      body: "It's time for prayer",
       scheduledDate: scheduled,
       notificationDetails: NotificationDetails(
         android: AndroidNotificationDetails(
@@ -77,14 +78,11 @@ class NotificationService {
       ),
       androidScheduleMode:
           AndroidScheduleMode.exactAllowWhileIdle,
-      
     );
-    
 
-    print("✅ Scheduled $title at $prayerTime");
+    print("✅ Scheduled $title");
   }
 
- 
   static Future<void> cancelPrayer(int id) async {
     await _plugin.cancel(id:id);
   }
@@ -92,5 +90,4 @@ class NotificationService {
   static Future<void> cancelAll() async {
     await _plugin.cancelAll();
   }
-
 }
