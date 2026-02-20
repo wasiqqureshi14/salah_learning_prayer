@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:salah_learning_prayer/core/services/prayer_scheduler.dart';
 import 'package:salah_learning_prayer/models/gender.dart';
 import 'package:salah_learning_prayer/providers/gender_provider.dart';
 import 'package:salah_learning_prayer/screens/gender_selection/gender_selection.dart';
@@ -12,7 +11,7 @@ class AppStartup extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     
- ref.watch(prayerSchedulerProvider);
+
     final gender = ref.watch(genderProvider);
 
     // while loading first frame

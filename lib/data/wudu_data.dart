@@ -114,7 +114,7 @@ WuduStep(
   WuduStep(
     order: 12,
     title: "Wash Left Foot",
-    image: "assets/images/wudu/wudu-step8.webp",
+    image: "assets/images/wudu/wudu-step9.webp",
     arabic: "غَسْلُ الرِّجْلِ الْيُسْرَى إِلَى الْكَعْبَيْنِ ثَلَاثَ مَرَّاتٍ",
     translation:
         "Wash the left foot including the ankle three times.",

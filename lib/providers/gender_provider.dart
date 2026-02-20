@@ -3,31 +3,34 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/gender.dart';
 
 final genderProvider =
-    NotifierProvider<GenderNotifier, Gender>(
+    NotifierProvider<GenderNotifier, Gender?>(
         GenderNotifier.new);
 
-class GenderNotifier extends Notifier<Gender> {
+class GenderNotifier extends Notifier<Gender?> {
 
   static const _key = 'gender';
 
   @override
-  Gender build() {
+  Gender? build() {
     _loadGender();
-    return Gender.male; // temporary default (1 frame only)
+    return null; // first launch = no gender
   }
 
+  /// Load saved gender (runs once at startup)
   Future<void> _loadGender() async {
     final prefs = await SharedPreferences.getInstance();
-
     final savedGender = prefs.getString(_key);
 
-    if (savedGender == 'female') {
+    if (savedGender == 'male') {
+      state = Gender.male;
+    } else if (savedGender == 'female') {
       state = Gender.female;
     } else {
-      state = Gender.male;
+      state = null; // new user only
     }
   }
 
+  /// Called when user selects gender
   Future<void> setGender(Gender gender) async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -36,6 +39,6 @@ class GenderNotifier extends Notifier<Gender> {
       gender == Gender.male ? 'male' : 'female',
     );
 
-    state = gender;
+    state = gender; // triggers rebuild once
   }
 }

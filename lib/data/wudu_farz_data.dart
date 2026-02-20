@@ -39,7 +39,7 @@ final List<WuduFarzStep> wuduFarzSteps = [
   WuduFarzStep(
     order: 4,
     title: "Wash Both Feet Including Ankles",
-    image: "assets/images/wudu/wudu-step10.webp",
+    image: "assets/images/wudu/wudu-step9.webp",
     arabic:
         "غَسْلُ الرِّجْلَيْنِ مَعَ الْكَعْبَيْنِ",
     translation:
