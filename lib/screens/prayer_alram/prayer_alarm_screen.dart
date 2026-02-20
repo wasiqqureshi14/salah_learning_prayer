@@ -1,28 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
-
-final prayerAlarmProvider =
-    StateNotifierProvider<PrayerAlarmNotifier, Map<String, bool>>(
-        (ref) => PrayerAlarmNotifier());
-
-class PrayerAlarmNotifier extends StateNotifier<Map<String, bool>> {
-  PrayerAlarmNotifier()
-      : super({
-          "Fajr": true,
-          "Dhuhr": true,
-          "Asr": true,
-          "Maghrib": true,
-          "Isha": true,
-        });
-
-  void toggle(String prayer, bool value) {
-    state = {
-      ...state,
-      prayer: value,
-    };
-  }
-}
+import 'package:salah_learning_prayer/models/gender.dart';
+import 'package:salah_learning_prayer/providers/alarm_provider.dart';
+import 'package:salah_learning_prayer/providers/gender_provider.dart';
 
 class PrayerAlarmScreen extends ConsumerWidget {
   const PrayerAlarmScreen({super.key});
@@ -32,6 +12,15 @@ class PrayerAlarmScreen extends ConsumerWidget {
 
     final alarms = ref.watch(prayerAlarmProvider);
     final notifier = ref.read(prayerAlarmProvider.notifier);
+
+    final gender = ref.watch(genderProvider);
+
+    /// ⭐ Update Jummah safely
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      notifier.updateJummah(
+        gender == Gender.male,
+      );
+    });
 
     final prayers = alarms.keys.toList();
 
@@ -52,7 +41,6 @@ class PrayerAlarmScreen extends ConsumerWidget {
             subtitle: const Text("Notify at prayer time"),
             value: alarms[prayer]!,
             onChanged: (val) {
-            
               notifier.toggle(prayer, val);
             },
             activeColor: const Color(0xFF016568),

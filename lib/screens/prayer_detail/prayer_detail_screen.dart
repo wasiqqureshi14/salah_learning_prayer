@@ -41,6 +41,23 @@ class PrayerDetailScreen extends ConsumerWidget {
                         ),
                       ),
                     ),
+
+                    Positioned(
+                      top: 50,
+                      left: 05,
+                      child: Row(
+                        children: [
+                        IconButton(
+                                icon: const Icon(
+                                  Icons.arrow_back_ios_new_outlined,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                        ]
+                      )),
               
                     // Title
                     Column(

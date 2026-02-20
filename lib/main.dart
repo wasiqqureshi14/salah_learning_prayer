@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:salah_learning_prayer/core/services/notification_services.dart';
 import 'package:salah_learning_prayer/core/theme/app_theme.dart';
 import 'package:salah_learning_prayer/screens/app_startup/app_startup_screen.dart';
 
-void main() {
+Future<void> main() async {
     WidgetsFlutterBinding.ensureInitialized();
+    await NotificationService.init();
+
     
   runApp(
     ProviderScope(

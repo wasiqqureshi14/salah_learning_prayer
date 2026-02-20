@@ -9,8 +9,10 @@ android {
     namespace = "com.example.salah_learning_prayer"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
+     compileSdk = 36
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -38,6 +40,15 @@ android {
         }
     }
 }
+
+dependencies {
+
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
+
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+}
+
+
 
 flutter {
     source = "../.."

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:salah_learning_prayer/core/services/prayer_scheduler.dart';
 import 'package:salah_learning_prayer/screens/home/widgets/prayer_end_time.dart';
 import 'widgets/home_header.dart';
 import 'widgets/menu_grid.dart';
@@ -11,6 +12,9 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(prayerSchedulerProvider);
+
+   
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
         statusBarColor: Color(0xFF016568),

@@ -2,8 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:salah_learning_prayer/providers/qibla_providers/needle_rotation_provider.dart';
+import 'package:salah_learning_prayer/screens/settings/setting.dart';
 import 'package:salah_learning_prayer/widgets/qibla_card.dart';
-import 'package:salah_learning_prayer/providers/location_provider.dart';
+import 'package:salah_learning_prayer/providers/location_provider/location_provider.dart';
 
 class QiblaDirectionScreen extends ConsumerWidget {
   const QiblaDirectionScreen({super.key});
@@ -41,16 +42,22 @@ class QiblaDirectionScreen extends ConsumerWidget {
         ),
 
         actions: [
-      Padding(
-        padding: const EdgeInsets.only(right: 10),
-        child: IconButton(
-          icon: const Icon(Icons.settings_outlined, color: Colors.white, size: 32,),
-          onPressed: () {
-            // open settings
-          },
-        ),
-      ),
-    ],
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+              icon: const Icon(Icons.settings_outlined,
+                  color: Colors.white, size: 32),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const Settingscreen(),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
   ),
       
 

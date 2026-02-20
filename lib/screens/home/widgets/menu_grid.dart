@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:salah_learning_prayer/screens/namaz_dua/namaz_dua.dart';
 import 'package:salah_learning_prayer/screens/namaz_faraiz/namaz_faraiz_screen.dart';
+import 'package:salah_learning_prayer/screens/ramadan_prayers/ramadan_prayer_screen.dart';
 import 'package:salah_learning_prayer/screens/salah_steps/salah_steps.dart';
+import 'package:salah_learning_prayer/screens/wudu/wudu_method/wudu_method.dart';
 import '../widgets/menu_items.dart';
 import 'package:salah_learning_prayer/screens/qibla_compass/qibla_compass.dart';
 
@@ -44,13 +47,15 @@ class MenuGrid extends StatelessWidget {
           ),
 
           MenuItem(
-            title: 'Prayers\nTimes',
+            title: 'Ramadan\nPrayers',
             icon: SvgPicture.asset(
               "assets/icons/prayer times-01.svg",
               height: screenHeight * 0.045,
               color: Colors.white,
             ),
-            onTap: () {},
+            onTap: () { Navigator.push(
+                context, MaterialPageRoute(builder: (_)=> RamadanPrayerScreen())
+              );},
           ),
 
           MenuItem(
@@ -71,17 +76,19 @@ class MenuGrid extends StatelessWidget {
           ),
 
           MenuItem(
-            title: 'Namaz\nDua',
+            title: 'Salah\nDua',
             icon: SvgPicture.asset(
               "assets/icons/Namaz dua-01.svg",
               height: screenHeight * 0.045,
               color: Colors.white,
             ),
-            onTap: () {},
+            onTap: () {Navigator.push(
+                context, MaterialPageRoute(builder: (_)=>  NamazDuaScreen(index: 0))
+              );},
           ),
 
           MenuItem(
-            title: 'Namaz\nFaraiz',
+            title: 'Salah\nFaraiz',
             icon: SvgPicture.asset(
               "assets/icons/isha-01.svg",
               height: screenHeight * 0.045,
@@ -104,7 +111,14 @@ class MenuGrid extends StatelessWidget {
               color: Colors.white,
               size: screenHeight * 0.045,
             ),
-            onTap: () {},
+            onTap: () {
+               Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const WuduScreen(),
+                ),
+              );
+            },
           ),
         ],
       ),

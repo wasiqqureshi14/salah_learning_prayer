@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:salah_learning_prayer/models/gender.dart';
 import 'package:salah_learning_prayer/models/setting_model.dart';
+import 'package:salah_learning_prayer/providers/alarm_provider.dart';
+import 'package:salah_learning_prayer/providers/gender_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:adhan/adhan.dart';
 import 'package:geolocator/geolocator.dart';
@@ -35,11 +37,9 @@ class AppSettingsNotifier extends AsyncNotifier<AppSettings> {
     /// ---------- LOCATION ----------
     if (autoLocation) {
 
-      final position =
-          await Geolocator.getCurrentPosition();
+      final position = await Geolocator.getCurrentPosition();
 
-      coordinates =
-          Coordinates(position.latitude, position.longitude);
+      coordinates = Coordinates(position.latitude, position.longitude);
 
       country = "Auto Detected";
 
@@ -53,8 +53,7 @@ class AppSettingsNotifier extends AsyncNotifier<AppSettings> {
     }
 
     /// ---------- TIMEZONE ----------
-    final timezone =
-        _calculateTimezone(coordinates.longitude);
+    final timezone = _calculateTimezone(coordinates.longitude);
 
     /// ---------- PRAYER CALCULATION ----------
     final calc = _getCalculation(country);
@@ -64,7 +63,7 @@ class AppSettingsNotifier extends AsyncNotifier<AppSettings> {
           ? Gender.female
           : Gender.male,
 
-      language: prefs.getString("language") ?? "English",
+    
 
       autoLocation: autoLocation,
       namazAlert: namazAlert,
@@ -82,13 +81,13 @@ class AppSettingsNotifier extends AsyncNotifier<AppSettings> {
     );
   }
 
-  /// ================= TIMEZONE =================
+  
   String _calculateTimezone(double longitude) {
     final offset = (longitude / 15).round();
     return "GMT ${offset >= 0 ? '+' : ''}$offset";
   }
 
-  /// ================= CALCULATION METHOD =================
+  
   Map<String, dynamic> _getCalculation(String country) {
 
     switch (country.toLowerCase()) {
@@ -118,7 +117,7 @@ class AppSettingsNotifier extends AsyncNotifier<AppSettings> {
     }
   }
 
-  /// ================= UPDATE COUNTRY =================
+  
   Future<void> updateManualLocation({
     required String country,
     required double lat,
@@ -146,7 +145,7 @@ class AppSettingsNotifier extends AsyncNotifier<AppSettings> {
     );
   }
 
-  /// ================= AUTO LOCATION =================
+  
   Future<void> toggleAutoLocation(bool val) async {
 
     final prefs = await SharedPreferences.getInstance();
@@ -156,38 +155,35 @@ class AppSettingsNotifier extends AsyncNotifier<AppSettings> {
     state = AsyncData(await build());
   }
 
-  /// ================= LANGUAGE =================
-  Future<void> updateLanguage(String lang) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString("language", lang);
+  
+ Future<void> updateGender(Gender g) async {
 
-    state = AsyncData(
-      state.requireValue.copyWith(language: lang),
-    );
-  }
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setString("gender", g.name);
 
-  /// ================= GENDER =================
-  Future<void> updateGender(Gender g) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString("gender", g.name);
+  state = AsyncData(
+    state.requireValue.copyWith(gender: g),
+  );
 
-    state = AsyncData(
-      state.requireValue.copyWith(gender: g),
-    );
-  }
+  ref.read(genderProvider.notifier).setGender(g);
+}
 
-  /// ================= NAMAZ ALERT =================
+
   Future<void> toggleNamazAlert(bool val) async {
 
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool("namazAlert", val);
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setBool("namazAlert", val);
 
-    state = AsyncData(
-      state.requireValue.copyWith(namazAlert: val),
-    );
-  }
+  state = AsyncData(
+    state.requireValue.copyWith(namazAlert: val),
+  );
 
-  /// ================= NOTIFICATIONS =================
+  /// ⭐ CONTROL ALL PRAYER ALARMS
+  ref.read(prayerAlarmProvider.notifier).setAll(val);
+}
+
+
+  
   Future<void> toggleNotifications(bool val) async {
 
     final prefs = await SharedPreferences.getInstance();
@@ -198,7 +194,6 @@ class AppSettingsNotifier extends AsyncNotifier<AppSettings> {
     );
   }
 
-  /// ================= PRAYER CALCULATION =================
   Future<void> togglePrayerCalculation(bool val) async {
 
     final prefs = await SharedPreferences.getInstance();

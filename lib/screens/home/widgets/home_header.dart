@@ -2,10 +2,12 @@ import 'package:adhan/adhan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:salah_learning_prayer/core/services/prayer_services.dart';
 import 'package:salah_learning_prayer/models/gender.dart';
 import 'package:salah_learning_prayer/providers/gender_provider.dart';
+import 'package:salah_learning_prayer/providers/location_provider/location_provider.dart';
 import 'package:salah_learning_prayer/providers/prayer_time_provider.dart';
 import 'package:salah_learning_prayer/providers/time_provider.dart';
 import 'package:salah_learning_prayer/screens/prayer_detail/prayer_detail_screen.dart';
@@ -23,6 +25,8 @@ class HomeHeader extends ConsumerWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
 
+        final gender = ref.watch(genderProvider);
+
         final height = constraints.maxHeight;
 
         return Stack(
@@ -39,7 +43,7 @@ class HomeHeader extends ConsumerWidget {
                 child: SvgPicture.asset(
                   'assets/images/mosque/mosque.svg',
                   fit: BoxFit.contain,
-                
+                  
                 ),
               ),
             ),
@@ -47,8 +51,8 @@ class HomeHeader extends ConsumerWidget {
             /// ✅ MAIN CONTAINER
             Container(
               padding: EdgeInsets.only(
-                top: height * 0.10,   // was 50
-                bottom: height * 0.10, // was 50
+                top: height * 0.10,   
+                bottom: height * 0.10, 
               ),
               decoration: BoxDecoration(
                 color: const Color(0xFF016568).withOpacity(0.9),
@@ -118,24 +122,36 @@ class HomeHeader extends ConsumerWidget {
                               },
                               loading: () => const Text('Loading prayer time...',
                                   style: TextStyle(color: Colors.white70)),
-                              error: (_, __) => const Text('Unable to load prayer time',
-                                  style: TextStyle(color: Colors.white70)),
+                              error: (err, _) {
+                                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                                      _showLocationDialog(context, ref);
+                                    });
+
+                                    return Text(
+                                      'Location required for prayer times',
+                                      style: TextStyle(
+                                        color: Colors.white70,
+                                        fontSize: height * 0.035,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    );
+                                  },
                             ),
                           ],
                         ),
-                        IconButton(
-  icon: const Icon(Icons.settings_outlined,
-      size: 32,
-      color: Colors.white),
-  onPressed: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const Settingscreen(),
-      ),
-    );
-  },
-)
+                                                IconButton(
+                          icon: const Icon(Icons.settings_outlined,
+                              size: 32,
+                              color: Colors.white),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const Settingscreen(),
+                              ),
+                            );
+                          },
+                        )
 
 
                       ],
@@ -150,6 +166,7 @@ class HomeHeader extends ConsumerWidget {
                       data: (times) {
 
                         final currentPrayer = times.currentPrayer();
+                        final isFriday = DateTime.now().weekday == DateTime.friday;
 
                         final prayers = [
                           {"name": "Fajr",
@@ -157,12 +174,22 @@ class HomeHeader extends ConsumerWidget {
                           "icon": "assets/icons/fajar-01.svg",
                           "enum": Prayer.fajr
                           },
-                          {"name": "Dhuhr",
-                          "time": times.dhuhr,
-                          "icon": "assets/icons/zohr-01.svg",
-                          "enum": Prayer.dhuhr
-                          },
-                          {"name": "Asr",
+                         if (isFriday && gender == Gender.male)
+                              {
+                                "name": "Jummah",
+                                "time": times.dhuhr, // Jummah uses Dhuhr time
+                                "icon": "assets/icons/zohr-01.svg",
+                                "enum": Prayer.dhuhr,
+                              }
+                            else
+                              {
+                                "name": "Dhuhr",
+                                "time": times.dhuhr,
+                                "icon": "assets/icons/zohr-01.svg",
+                                "enum": Prayer.dhuhr
+                              },
+                           
+                            {"name": "Asr",
                           "time": times.asr,
                           "icon": "assets/icons/asr-01.svg",
                           "enum": Prayer.asr
@@ -223,10 +250,8 @@ class HomeHeader extends ConsumerWidget {
                       );
 
                       },
-                      loading: () =>
-                          const Center(child: CircularProgressIndicator()),
-                      error: (_, __) =>
-                          const Center(child: Text("Failed to load prayer times")),
+                      loading: () => _buildPrayerRow(null, ref),
+                      error: (_, __) => _buildPrayerRow(null, ref),
                     ),
                   ),
                 ],
@@ -239,4 +264,68 @@ class HomeHeader extends ConsumerWidget {
       },
     );
   }
+}
+void _showLocationDialog(BuildContext context, WidgetRef ref) {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (_) {
+      return AlertDialog(
+        title: const Text("Enable Location"),
+        content: const Text(
+          "To calculate accurate prayer times please enable device location.",
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Not Now"),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              Navigator.pop(context);
+
+              await Geolocator.openLocationSettings();
+
+              /// auto refresh providers after returning
+              ref.invalidate(locationProvider);
+              ref.invalidate(prayerTimesProvider);
+            },
+            child: const Text("Turn On Location"),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+Widget _buildPrayerRow(PrayerTimes? times, WidgetRef ref) {
+
+  final prayers = [
+    {"name": "Fajr", "icon": "assets/icons/fajar-01.svg"},
+    {"name": "Dhuhr", "icon": "assets/icons/zohr-01.svg"},
+    {"name": "Asr", "icon": "assets/icons/asr-01.svg"},
+    {"name": "Maghrib", "icon": "assets/icons/magrib-01.svg"},
+    {"name": "Isha", "icon": "assets/icons/isha-01.svg"},
+  ];
+
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 12),
+    child: Row(
+      children: prayers.map((prayer) {
+        return Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: PrayerCard(
+              name: prayer["name"] as String,
+              time: times == null ? "" : "",
+              icon: SvgPicture.asset(
+                prayer["icon"] as String,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        );
+      }).toList(),
+    ),
+  );
 }

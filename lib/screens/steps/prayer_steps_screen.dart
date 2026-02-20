@@ -9,6 +9,7 @@ class PrayerStepsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    
     final steps = ref.watch(prayerStepsProvider);
     final index = ref.watch(currentStepIndexProvider);
     final step = steps[index];
@@ -20,6 +21,8 @@ class PrayerStepsScreen extends ConsumerWidget {
     final selectedRakatText = ref.watch(selectedRakatTextProvider);
 
     final repeat = ref.watch(repeatCountProvider);
+
+
 
     final globalStepNumber =
         ((currentRakat - 1) * steps.length) + (index + 1);

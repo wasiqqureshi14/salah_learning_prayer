@@ -22,7 +22,6 @@ class SettingsTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
 
-          /// LABEL
           Text(
             label,
             style: const TextStyle(

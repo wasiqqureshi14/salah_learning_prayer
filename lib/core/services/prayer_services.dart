@@ -2,7 +2,6 @@ import 'package:adhan/adhan.dart';
 
 class PrayerService {
 
-  /// Get prayer end time
   static DateTime getPrayerEndTime(
     Prayer currentPrayer,
     PrayerTimes times,
@@ -37,7 +36,6 @@ class PrayerService {
     }
   }
 
-  /// Remaining time with forbidden gap support
   static Duration? getRemainingTime(PrayerTimes times) {
 
     final now = DateTime.now();
@@ -48,7 +46,6 @@ class PrayerService {
       times,
     );
 
-    /// If prayer already ended → return null
     if (now.isAfter(endTime)) {
       return null;
     }

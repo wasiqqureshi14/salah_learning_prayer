@@ -63,15 +63,37 @@ class PrayerEndCard extends ConsumerWidget {
               );
             },
 
-            loading: () => const Center(
-              child: CircularProgressIndicator(),
-            ),
-
-            error: (_, __) =>
-                const Center(child: Text("Failed to load")),
+           error: (_, __) => _buildEndCard("", height),
+            loading: () => _buildEndCard("", height),
           ),
         );
       },
     );
   }
+}
+Widget _buildEndCard(String time, double height) {
+  return Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "PRAYER Ends At",
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: height * 0.15,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+        SizedBox(height: height * 0.04),
+        Text(
+          time,
+          style: TextStyle(
+            fontSize: height * 0.20,
+            fontWeight: FontWeight.w900,
+            color: const Color(0xFF016568),
+          ),
+        ),
+      ],
+    ),
+  );
 }

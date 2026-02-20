@@ -46,4 +46,16 @@ const Map<String, PrayerModel> prayerData = {
       '3 Rakats Witr',
     ],
   ),
+
+  'jummah': PrayerModel(
+  name: 'Jummah',
+  rakats: [
+     '4 Rakats Sunnah',
+     '2 Rakats Farz',
+     '4 Rakats Sunnah',
+     '2 Rakats Sunnah',
+      '2 Rakats Nafl',
+  ],
+),
+
 };

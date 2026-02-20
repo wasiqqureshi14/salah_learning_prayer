@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:country_picker/country_picker.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:salah_learning_prayer/screens/prayer_alram/prayer_alarm_screen.dart';
 import 'package:salah_learning_prayer/screens/settings/widgets/country_picker.dart';
@@ -42,18 +41,6 @@ class Settingscreen extends ConsumerWidget {
             fontWeight: FontWeight.w900,
           ),
         ),
-
-        actions: [
-      Padding(
-        padding: const EdgeInsets.only(right: 10),
-        child: IconButton(
-          icon: const Icon(Icons.settings_outlined, color: Colors.white, size: 32,),
-          onPressed: () {
-            // open settings
-          },
-        ),
-      ),
-    ],
   ),
 
       body: settingsAsync.when(
@@ -85,20 +72,20 @@ class Settingscreen extends ConsumerWidget {
                         if (settings.autoLocation) return;
 
                       showSmallCountryPicker(
-  context,
-  (country) async {
-    final locations =
-        await locationFromAddress(country.name);
+                          context,
+                          (country) async {
+                            final locations =
+                                await locationFromAddress(country.name);
 
-    final loc = locations.first;
+                            final loc = locations.first;
 
-    notifier.updateManualLocation(
-      country: country.name,
-      lat: loc.latitude,
-      lng: loc.longitude,
-    );
-  },
-);
+                            notifier.updateManualLocation(
+                              country: country.name,
+                              lat: loc.latitude,
+                              lng: loc.longitude,
+                            );
+                          },
+                        );
 
                       },
                     ),
@@ -143,36 +130,6 @@ class Settingscreen extends ConsumerWidget {
                       },
                     ),
 
-                    SettingsTile(
-                      label: "Language",
-                      value: settings.language,
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (_) => Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-
-                              ListTile(
-                                title: const Text("English"),
-                                onTap: () {
-                                  notifier.updateLanguage("English");
-                                  Navigator.pop(context);
-                                },
-                              ),
-
-                              ListTile(
-                                title: const Text("Urdu"),
-                                onTap: () {
-                                  notifier.updateLanguage("Urdu");
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
 
                     SettingsSwitchTile(
                       title: "Namaz Time Alert",
@@ -281,29 +238,27 @@ class Settingscreen extends ConsumerWidget {
               const SizedBox(height: 18),
 
              TextButton(
-  onPressed: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const PrayerAlarmScreen(),
-      ),
-    );
-  },
-  style: TextButton.styleFrom(
-    padding: EdgeInsets.zero, // keeps same alignment
-    alignment: Alignment.centerLeft,
-  ),
-  child: const Text(
-    "Prayer Time Alarm",
-    style: TextStyle(
-      fontWeight: FontWeight.w700,
-      color: Color(0xFF016568),
-      fontSize: 16,
-    ),
-  ),
-),
-
-              
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const PrayerAlarmScreen(),
+                        ),
+                      );
+                    },
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.zero, // keeps same alignment
+                      alignment: Alignment.centerLeft,
+                    ),
+                    child: const Text(
+                      "Prayer Time Alarm",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF016568),
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
             ],
           );
         },

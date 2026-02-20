@@ -4,7 +4,7 @@ import 'package:adhan/adhan.dart';
 class AppSettings {
 
   final Gender gender;
-  final String language;
+ 
   final bool autoLocation;
 
   final bool namazAlert;
@@ -21,7 +21,7 @@ class AppSettings {
 
   const AppSettings({
     required this.gender,
-    required this.language,
+   
     required this.autoLocation,
     required this.namazAlert,
     required this.prayerCalculation,
@@ -50,7 +50,6 @@ class AppSettings {
   }) {
     return AppSettings(
       gender: gender ?? this.gender,
-      language: language ?? this.language,
       autoLocation: autoLocation ?? this.autoLocation,
       namazAlert: namazAlert ?? this.namazAlert,
       notifications: notifications ?? this.notifications,

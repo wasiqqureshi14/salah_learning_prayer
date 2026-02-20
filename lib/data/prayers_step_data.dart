@@ -123,8 +123,8 @@ List<PrayerStep> buildSteps({
         order: 13,
         title: 'Qaida (Tashahhud)',
       image: getImage('p11-01.webp', gender),
-        arabic: 'التَّحِيَّاتُ لِلَّهِ...',
-        translation: 'Recite Tashahhud.',
+        arabic: 'اَلتَّحِيَّاتُ لِلّٰهِ وَالصَّلَوٰتُ وَالطَّيِّبَاتُ، اَلسَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللّٰهِ وَبَرَكَاتُهُ، اَلسَّلَامُ عَلَيْنَا وَعَلَىٰ عِبَادِ اللّٰهِ الصَّالِحِينَ، أَشْهَدُ أَنْ لَا إِلٰهَ إِلَّا اللّٰهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ',
+        translation: 'All compliments, prayers, and pure words are for Allah. Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous servants of Allah. I bear witness that there is no god except Allah, and I bear witness that Muhammad is His servant and Messenger.',
       ),
     );
   }
@@ -161,9 +161,9 @@ List<PrayerStep> buildSteps({
         order: 16,
         title: 'Final Qaida ',
        image: getImage('p11-01.webp', gender),
-        arabic: 'السَّلَامُ عَلَيْكُمْ',
+        arabic: 'اَلتَّحِيَّاتُ لِلّٰهِ وَالصَّلَوٰتُ وَالطَّيِّبَاتُ، اَلسَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللّٰهِ وَبَرَكَاتُهُ، اَلسَّلَامُ عَلَيْنَا وَعَلَىٰ عِبَادِ اللّٰهِ الصَّالِحِينَ، أَشْهَدُ أَنْ لَا إِلٰهَ إِلَّا اللّٰهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ',
         translation:
-            'Recite Tashahhud, Durood, Dua, then say Salam.',
+            'All compliments, prayers, and pure words are for Allah. Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous servants of Allah. I bear witness that there is no god except Allah, and I bear witness that Muhammad is His servant and Messenger.',
       ),
     );
     steps.add(
@@ -171,9 +171,9 @@ List<PrayerStep> buildSteps({
         order: 17,
         title: 'Darood Shareef ',
        image: getImage('p11-01.webp', gender),
-        arabic: 'السَّلَامُ عَلَيْكُمْ',
+        arabic: 'اللّٰهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَىٰ إِبْرَاهِيمَ وَعَلَىٰ آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ، اللّٰهُمَّ بَارِكْ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَىٰ إِبْرَاهِيمَ وَعَلَىٰ آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ',
         translation:
-            'Recite Tashahhud, Durood, Dua, then say Salam.',
+            'O Allah, send Your mercy upon Muhammad and the family of Muhammad as You sent mercy upon Ibrahim and the family of Ibrahim. Indeed, You are Praiseworthy and Glorious. O Allah, bless Muhammad and the family of Muhammad as You blessed Ibrahim and the family of Ibrahim. Indeed, You are Praiseworthy and Glorious.',
       ),
     );
     steps.add(
