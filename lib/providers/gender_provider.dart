@@ -39,6 +39,6 @@ class GenderNotifier extends Notifier<Gender?> {
       gender == Gender.male ? 'male' : 'female',
     );
 
-    state = gender; // triggers rebuild once
+    state = gender; 
   }
 }

@@ -76,6 +76,15 @@ List<PrayerStep> buildSteps({
       arabic: 'قُلْ هُوَ اللّٰهُ أَحَدٌ اللّٰهُ الصَّمَدُ لَمْ يَلِدْ وَلَمْ يُولَدْ وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ',
       translation: 'Say: He is Allah, the One. Allah, the Eternal Refuge. He neither begets nor is born. Nor is there to Him any equivalent.',
     ),
+
+if (isLastRakat && isWitr)
+  PrayerStep(
+    order: 8,
+    title: 'Dua e Qunoot',
+    image: getImage('p7-01.webp', gender),
+    arabic: ' اللَّهُمَّ إِنَّا نَسْتَعِينُكَ وَنَسْتَغْفِرُكَ وَنُؤْمِنُ بِكَ وَنَتَوَكَّلُ عَلَيْكَ وَنُثْنِي عَلَيْكَ الْخَيْرَ وَنَشْكُرُكَ وَلَا نَكْفُرُكَ وَنَخْلَعُ وَنَتْرُكُ مَنْ يَفْجُرُكَاللَّهُمَّ إِيَّاكَ نَعْبُدُ وَلَكَ نُصَلِّي وَنَسْجُدُ وَإِلَيْكَ نَسْعَى وَنَحْفِدُ وَنَرْجُو رَحْمَتَكَ وَنَخْشَى عَذَابَكَ إِنَّ عَذَابَكَ بِالْكُفَّارِ مُلْحِقٌ',
+    translation: 'O Allah, we seek Your help and ask Your forgiveness. We believe in You and rely upon You. We praise You with all goodness. We thank You and do not show ingratitude to You.We renounce and abandon those who disobey You. O Allah, You alone we worship, and for You we pray and prostrate. Toward You we strive and hasten. We hope for Your mercy and fear Your punishment. Indeed, Your punishment will overtake the disbelievers.',
+  ),
      PrayerStep(
       order: 8,
       title: 'Ruku',
@@ -144,18 +153,6 @@ List<PrayerStep> buildSteps({
 
   // 🔹 Final Qaida
   if (isLastRakat) {
-    if (isWitr) {
-      steps.add(
-         PrayerStep(
-          order: 15,
-          title: 'Qunoot',
-        image: getImage('p7-01.webp', gender),
-          arabic: 'اللَّهُمَّ اهْدِنِي...',
-          translation: 'Dua e Qunoot.',
-        ),
-      );
-    }
-
     steps.add(
      PrayerStep(
         order: 16,

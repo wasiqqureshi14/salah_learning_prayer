@@ -44,7 +44,7 @@ final List<WuduStep> wuduSteps = [
   WuduStep(
     order: 5,
     title: "Wash Right Arm",
-    image: "assets/images/wudu/wudu-step5.webp",
+    image: "assets/images/wudu/wudu-step5.1.webp",
     arabic: "غَسْلُ الْيَدِ الْيُمْنَى مَعَ الْمِرْفَقِ ثَلَاثَ مَرَّاتٍ",
     translation:
         "Wash the right arm including the elbow three times.",
@@ -54,7 +54,7 @@ final List<WuduStep> wuduSteps = [
   WuduStep(
     order: 6,
     title: "Wash Left Arm",
-    image: "assets/images/wudu/wudu-step6.webp",
+    image: "assets/images/wudu/wudu-step5.webp",
     arabic: "غَسْلُ الْيَدِ الْيُسْرَى مَعَ الْمِرْفَقِ ثَلَاثَ مَرَّاتٍ",
     translation:
         "Wash the left arm including the elbow three times.",
@@ -85,7 +85,7 @@ WuduStep(
 WuduStep(
   order: 9,
   title: "Wipe the Back of the Neck",
-  image: "assets/images/wudu/wudu-step9.webp",
+  image: "assets/images/wudu/wudu-step7.webp",
   arabic: "مَسْحُ خَلْفِ الرَّقَبَةِ بِظَهْرِ الْيَدَيْنِ",
   translation:
       "Wipe the back of the neck once using the back of the hands. This is a Sunnah act.",
@@ -93,7 +93,7 @@ WuduStep(
 WuduStep(
   order: 10,
   title: "Wipe Both Arms",
-  image: "assets/images/wudu/wudu-step9.webp",
+  image: "assets/images/wudu/wudu-step5.webp",
   arabic:
       "مَسْحُ الذِّرَاعِ الْيُسْرَى أَوَّلًا ثُمَّ الذِّرَاعِ الْيُمْنَى بِالْيَدَيْنِ",
   translation:
@@ -104,7 +104,7 @@ WuduStep(
   WuduStep(
     order: 11,
     title: "Wash Right Foot",
-    image: "assets/images/wudu/wudu-step8.webp",
+    image: "assets/images/wudu/wudu-step9.webp",
     arabic: "غَسْلُ الرِّجْلِ الْيُمْنَى إِلَى الْكَعْبَيْنِ ثَلَاثَ مَرَّاتٍ",
     translation:
         "Wash the right foot including the ankle three times.",
@@ -114,7 +114,7 @@ WuduStep(
   WuduStep(
     order: 12,
     title: "Wash Left Foot",
-    image: "assets/images/wudu/wudu-step9.webp",
+    image: "assets/images/wudu/wudu-step8.webp",
     arabic: "غَسْلُ الرِّجْلِ الْيُسْرَى إِلَى الْكَعْبَيْنِ ثَلَاثَ مَرَّاتٍ",
     translation:
         "Wash the left foot including the ankle three times.",

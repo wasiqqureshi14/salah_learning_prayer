@@ -16,7 +16,7 @@ final List<WuduFarzStep> wuduFarzSteps = [
   /// 2. WASH ARMS INCLUDING ELBOWS
   WuduFarzStep(
     order: 2,
-    title: "Wash Both Arms Including Elbows",
+    title: "Wash Both Arms",
     image: "assets/images/wudu/wudu-step5.webp",
     arabic:
         "غَسْلُ الْيَدَيْنِ مَعَ الْمِرْفَقَيْنِ إِلَى الْكُوعَيْنِ",
@@ -28,7 +28,7 @@ final List<WuduFarzStep> wuduFarzSteps = [
   WuduFarzStep(
     order: 3,
     title: "Wipe the Head (Masah)",
-    image: "assets/images/wudu/wudu-step7.webp",
+    image: "assets/images/wudu/wudu-step6.webp",
     arabic:
         "مَسْحُ رُبُعِ الرَّأْسِ عَلَى الأَقَلِّ",
     translation:
@@ -38,7 +38,7 @@ final List<WuduFarzStep> wuduFarzSteps = [
   /// 4. WASH FEET INCLUDING ANKLES
   WuduFarzStep(
     order: 4,
-    title: "Wash Both Feet Including Ankles",
+    title: "Wash Both Feet",
     image: "assets/images/wudu/wudu-step9.webp",
     arabic:
         "غَسْلُ الرِّجْلَيْنِ مَعَ الْكَعْبَيْنِ",

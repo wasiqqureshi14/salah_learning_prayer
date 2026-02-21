@@ -92,7 +92,7 @@ flutter:
 
 flutter_native_splash:
   color: "#016568"
-  image: assets/images/mosque/logo1.png
+  image: assets/images/mosque/app-logo.png
 
   android: true
   ios: true
@@ -102,7 +102,7 @@ flutter_native_splash:
 
   android_12:
     color: "#016568"
-    image: assets/images/mosque/logo1.png
+    image: assets/images/mosque/app-logo.png
 
 flutter_launcher_icons:
   android: true
